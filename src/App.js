@@ -1,27 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Settings from './Settings';
+import Game from './Game';
+import End from './End';
 
+//9x9 10mines
+const scenes = {
+  SETTINGS: 0,
+  GAME: 1
+}
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scene: scenes.SETTINGS,
+      settings: {
+        "w": 4,
+        "h": 4,
+        "mines": 2
+      },
+      winner: null
+    }
+  }
+  handleEndSettings = (settings) => {
+    this.setState({
+      scene: scenes.GAME,
+      settings: settings
+    });
+  }
+  handleEndGame = (isWinner) => {
+    this.setState({
+      winner: isWinner
+    });
+  }
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    return (<div>
+      {(this.state.winner !== null) && <End isWinner={this.state.winner} />}
+      {(this.state.scene === scenes.SETTINGS) ? <Settings defaultSettings={this.state.settings} onEndSettings={this.handleEndSettings} /> : <Game settings={this.state.settings} onEndGame={this.handleEndGame} />}
+    </div>)
   }
 }
 

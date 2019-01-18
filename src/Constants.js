@@ -1,0 +1,1 @@
+export const MINE_ID = 9;
