@@ -14,7 +14,7 @@ class Game extends Component {
         }
         // TODO: contar las minas que tiene proximas cada bloque
         this.state = {
-            board: board.map(mine => ({ "visible": false, "hasMine": mine })),
+            board: board.map(cell => ({ "visible": false, "hasMine": cell })),
             size: {
                 w: settings.w,
                 h: settings.h
@@ -23,6 +23,7 @@ class Game extends Component {
         };
     }
     getNeightbours = (id) => {
+        // TODO: son 8 direcciones, no 4
         let nb = [];
         (id >= this.state.size.w) && nb.push(id - this.state.size.w);
         (id < (this.state.size.w * this.state.size.h) - this.state.size.w) && nb.push(id + this.state.size.w);
@@ -34,7 +35,7 @@ class Game extends Component {
         let cell = Object.assign(board[id], {});
         cell.visible = true;
         board[id] = cell;
-        // TODO: determinar cuando hay que revelar ayudas
+        // TODO: revelar ayudas autmaticamente cuando se hace clic en un cero minas, no siempre
         this.getNeightbours(id).filter(nid => !board[nid].visible).forEach(nid => this.revealCell(board, nid));
     }
     handleCellClick = (id) => {
