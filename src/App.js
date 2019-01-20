@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Settings from './Settings';
 import Game from './Game';
-import End from './End';
 
 //9x9 10mines
 const scenes = {
@@ -15,9 +14,9 @@ class App extends Component {
     this.state = {
       scene: scenes.SETTINGS,
       settings: {
-        "w": 4,
-        "h": 4,
-        "mines": 2
+        "w": 9,
+        "h": 9,
+        "mines": 10
       },
       winner: null
     }
@@ -28,15 +27,9 @@ class App extends Component {
       settings: settings
     });
   }
-  handleEndGame = (isWinner) => {
-    this.setState({
-      winner: isWinner
-    });
-  }
   render() {
     return (<div>
-      {(this.state.winner !== null) && <End isWinner={this.state.winner} />}
-      {(this.state.scene === scenes.SETTINGS) ? <Settings defaultSettings={this.state.settings} onEndSettings={this.handleEndSettings} /> : <Game settings={this.state.settings} onEndGame={this.handleEndGame} />}
+      {(this.state.scene === scenes.SETTINGS) ? <Settings defaultSettings={this.state.settings} onEndSettings={this.handleEndSettings} /> : <Game settings={this.state.settings} />}
     </div>)
   }
 }
