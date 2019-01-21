@@ -44,6 +44,7 @@ class Game extends Component {
         return nb;
     }
     revealCell = (board, id) => {
+        console.log(id);
         let cell = Object.assign(board[id], {});
         cell.visible = true;
         board[id] = cell;
